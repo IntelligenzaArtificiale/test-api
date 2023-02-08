@@ -50,12 +50,15 @@ def translate():
     translated_sentences = []
     for sentence in sentences:
         sentence = sentence.strip()
-        if sentence:  # verifica che la frase non sia vuota
-            url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
-            response = requests.get(url)
-            data = response.json()
-            translated_sentences.append(data[0][0][0])
-    
+        if len(sentence) > 1:  # verifica che la frase non sia vuota
+            try:
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
+                response = requests.get(url)
+                data = response.json()
+                translated_sentences.append(data[0][0][0])
+            except:
+                pass
+
     translated_text = " ".join(translated_sentences)
     
     return jsonify({"translated_text": translated_text})
@@ -63,20 +66,23 @@ def translate():
 
 @app.route("/translateTest", methods=["GET"])
 def translateTest():
-    text = request.json["text"]
-    source_language = request.json["sl"]
-    target_language = request.json["tl"]
+    text = request.args.get("text")
+    source_language = request.args.get("sl")
+    target_language = request.args.get("tl")
     
     sentences = re.split(r'[.!?]+', text)
     translated_sentences = []
     for sentence in sentences:
         sentence = sentence.strip()
-        if sentence:  # verifica che la frase non sia vuota
-            url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
-            response = requests.get(url)
-            data = response.json()
-            translated_sentences.append(data[0][0][0])
-    
+        if len(sentence) > 1:  # verifica che la frase non sia vuota
+            try:
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
+                response = requests.get(url)
+                data = response.json()
+                translated_sentences.append(data[0][0][0])
+            except:
+                pass
+
     translated_text = " ".join(translated_sentences)
     
     return jsonify({"translated_text": translated_text})
