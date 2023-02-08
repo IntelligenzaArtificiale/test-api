@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
 import requests
 import re
 
@@ -57,7 +57,7 @@ def translate():
             try:
                 url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
                 response = requests.get(url)
-                data = response.json()
+                data = json.loads(response.content.decode("utf-8"))
                 translated_sentences.append(data[0][0][0])
             except requests.exceptions.RequestException as e:
                 return jsonify({"error": f"Request error: {e}"}), 500
@@ -66,7 +66,7 @@ def translate():
 
     translated_text = " ".join(translated_sentences)
     
-    return jsonify({"translated_text": translated_text.decode("utf-8")})
+    return jsonify({"translated_text": translated_text}, ensure_ascii=False)
 
 
 @app.route("/translateTest", methods=["GET"])
@@ -86,7 +86,7 @@ def translateTest():
             try:
                 url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
                 response = requests.get(url)
-                data = response.json()
+                data = json.loads(response.content.decode("utf-8"))
                 translated_sentences.append(data[0][0][0])
             except requests.exceptions.RequestException as e:
                 return jsonify({"error": f"Request error: {e}"}), 500
@@ -95,4 +95,4 @@ def translateTest():
 
     translated_text = " ".join(translated_sentences)
     
-    return jsonify({"translated_text": translated_text.decode("utf-8")})
+    return jsonify({"translated_text": translated_text}, ensure_ascii=False)
