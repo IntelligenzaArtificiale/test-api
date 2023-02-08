@@ -45,6 +45,9 @@ def translate():
     text = request.json["text"]
     source_language = request.json["sl"]
     target_language = request.json["tl"]
+
+    if not all([text, source_language, target_language]):
+        return jsonify({"error": "Missing required parameters"}), 400
     
     sentences = re.split(r'[.!?]+', text)
     translated_sentences = []
@@ -56,12 +59,14 @@ def translate():
                 response = requests.get(url)
                 data = response.json()
                 translated_sentences.append(data[0][0][0])
-            except:
-                pass
+            except requests.exceptions.RequestException as e:
+                return jsonify({"error": f"Request error: {e}"}), 500
+            except ValueError as e:
+                return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
     
-    return jsonify({"translated_text": translated_text})
+    return jsonify({"translated_text": translated_text.decode("utf-8")})
 
 
 @app.route("/translateTest", methods=["GET"])
@@ -69,6 +74,9 @@ def translateTest():
     text = request.args.get("text")
     source_language = request.args.get("sl")
     target_language = request.args.get("tl")
+
+    if not all([text, source_language, target_language]):
+        return jsonify({"error": "Missing required parameters"}), 400
     
     sentences = re.split(r'[.!?]+', text)
     translated_sentences = []
@@ -80,9 +88,11 @@ def translateTest():
                 response = requests.get(url)
                 data = response.json()
                 translated_sentences.append(data[0][0][0])
-            except:
-                pass
+            except requests.exceptions.RequestException as e:
+                return jsonify({"error": f"Request error: {e}"}), 500
+            except ValueError as e:
+                return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
     
-    return jsonify({"translated_text": translated_text})
+    return jsonify({"translated_text": translated_text.decode("utf-8")})
