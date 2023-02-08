@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import ftfy
 import requests
 import re
 
@@ -65,7 +66,7 @@ def translate():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    translated_text = translated_text.encode("utf-8").decode("unicode_escape")
+    translated_text = ftfy.fix_text(translated_text)
 
     return jsonify({"translated_text": translated_text})
 
@@ -95,6 +96,6 @@ def translateTest():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    translated_text = translated_text.encode("utf-8").decode("unicode_escape")
+    translated_text = ftfy.fix_text(translated_text)
 
     return jsonify({"translated_text": translated_text})
