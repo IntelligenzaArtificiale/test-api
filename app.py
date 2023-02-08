@@ -58,7 +58,7 @@ def translate():
     
     return jsonify({"translated_text": translated_text})
 
-@app.route("/translate")
+@app.route("/translate-test", methods=["GET"])
 def translate():
     text = request.args.get("text")
     source_language = request.args.get("source_language")
