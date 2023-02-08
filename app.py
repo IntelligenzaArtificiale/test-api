@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, json
+from flask import Flask, request, jsonify
 import requests
 import re
 
@@ -57,7 +57,7 @@ def translate():
             try:
                 url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
                 response = requests.get(url)
-                data = json.loads(response.content.decode("utf-8"))
+                data = response.json()
                 translated_sentences.append(data[0][0][0])
             except requests.exceptions.RequestException as e:
                 return jsonify({"error": f"Request error: {e}"}), 500
@@ -65,8 +65,9 @@ def translate():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    
-    return jsonify({"translated_text": json.dumps(translated_text, ensure_ascii=False)})
+    translated_text = translated_text.encode("utf-8").decode("unicode_escape")
+
+    return jsonify({"translated_text": translated_text})
 
 
 @app.route("/translateTest", methods=["GET"])
@@ -86,7 +87,7 @@ def translateTest():
             try:
                 url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
                 response = requests.get(url)
-                data = json.loads(response.content.decode("utf-8"))
+                data = response.json()
                 translated_sentences.append(data[0][0][0])
             except requests.exceptions.RequestException as e:
                 return jsonify({"error": f"Request error: {e}"}), 500
@@ -94,5 +95,6 @@ def translateTest():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    
-    return jsonify({"translated_text": json.dumps(translated_text, ensure_ascii=False)})
+    translated_text = translated_text.encode("utf-8").decode("unicode_escape")
+
+    return jsonify({"translated_text": translated_text})
