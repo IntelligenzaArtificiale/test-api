@@ -16,20 +16,20 @@ def info():
     '''
 
     # Esempi di richieste di traduzione
-    url1 = 'https://test-api-6lv1.onrender.com/translate?text=ciao&sl=italiano&tl=inglese'
-    url2 = 'https://test-api-6lv1.onrender.com/translate?text=buongiorno&sl=italiano&tl=tedesco'
-    url3 = 'https://test-api-6lv1.onrender.com/translate?text=hola&sl=spagnolo&tl=francese'
-    url4 = 'https://test-api-6lv1.onrender.com/translate?text=salut&sl=francese&tl=portoghese'
-    url5 = 'https://test-api-6lv1.onrender.com/translate?text=bonjour&sl=francese&tl=russo'
+    url1 = 'https://test-api-6lv1.onrender.com/translateTest?text=ciao&sl=it&tl=en'
+    url2 = 'https://test-api-6lv1.onrender.com/translateTest?text=buongiorno&sl=it&tl=de'
+    url3 = 'https://test-api-6lv1.onrender.com/translateTest?text=hola&sl=sl&tl=fr'
+    url4 = 'https://test-api-6lv1.onrender.com/translateTest?text=salut&sl=fr&tl=pt'
+    url5 = 'https://test-api-6lv1.onrender.com/translateTest?text=bonjour&sl=fr&tl=ru'
 
     # Ritorna tutti gli esempi in stile HTML
     html += '<br><h1>Esempi Traduttore API</h1> '
     html += '<ul>'
-    html += '<li>Traduci "ciao" dall\'italiano all\'inglese: ' + url1 + '</li>'
-    html += '<li>Traduci "buongiorno" dall\'italiano al tedesco: ' + url2 + '</li>'
-    html += '<li>Traduci "hola" dallo spagnolo al francese: ' + url3 + '</li>'
-    html += '<li>Traduci "salut" dal francese al portoghese: ' + url4 + '</li>'
-    html += '<li>Traduci "bonjour" dal francese al russo: ' + url5 + '</li>'
+    html += '<li>Traduci "ciao" dall\'italiano all\'inglese: <a href="' + url1 + '">' + url1 + '</a> </li>'
+    html += '<li>Traduci "buongiorno" dall\'italiano al tedesco: <a href="' + url2 + '">' + url2 + '</a> </li>'
+    html += '<li>Traduci "hola" dallo spagnolo al francese: <a href="' + url3 + '">' + url3 + '</a> </li>'
+    html += '<li>Traduci "salut" dal francese al portoghese: <a href="' + url4 + '">' + url4 + '</a> </li>'
+    html += '<li>Traduci "bonjour" dal francese al russo: <a href="' + url5 + '">' + url5 + '</a> </li>'
     html += '</ul>'
 
     return html
