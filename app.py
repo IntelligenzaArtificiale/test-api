@@ -40,7 +40,7 @@ def example():
 def health_check():
     return "OK", 200
 
-@app.route("/translate", methods=["POST"])
+@app.route("/fastranslate", methods=["POST"])
 def translate():
     text = request.json["text"]
     source_language = request.json["source_language"]
