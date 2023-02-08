@@ -17,11 +17,11 @@ def info():
 @app.route('/example')
 def example():
     # Esempi di richieste di traduzione
-    url1 = 'https://test-api-6lv1.onrender.com/translate?text=ciao&source_language=italiano&target_language=inglese'
-    url2 = 'https://test-api-6lv1.onrender.com/translate?text=buongiorno&source_language=italiano&target_language=tedesco'
-    url3 = 'https://test-api-6lv1.onrender.com/translate?text=hola&source_language=spagnolo&target_language=francese'
-    url4 = 'https://test-api-6lv1.onrender.com/translate?text=salut&source_language=francese&target_language=portoghese'
-    url5 = 'https://test-api-6lv1.onrender.com/translate?text=bonjour&source_language=francese&target_language=russo'
+    url1 = 'https://test-api-6lv1.onrender.com/translateTest?text=ciao&source_language=italiano&target_language=inglese'
+    url2 = 'https://test-api-6lv1.onrender.com/translateTest?text=buongiorno&source_language=italiano&target_language=tedesco'
+    url3 = 'https://test-api-6lv1.onrender.com/translateTest?text=hola&source_language=spagnolo&target_language=francese'
+    url4 = 'https://test-api-6lv1.onrender.com/translateTest?text=salut&source_language=francese&target_language=portoghese'
+    url5 = 'https://test-api-6lv1.onrender.com/translateTest?text=bonjour&source_language=francese&target_language=russo'
 
     # Ritorna tutti gli esempi in stile HTML
     html = '<h1>Esempi Traduttore API</h1> '
@@ -58,7 +58,7 @@ def translate():
     
     return jsonify({"translated_text": translated_text})
 
-@app.route("/translate-test", methods=["GET"])
+@app.route("/translateTest", methods=["GET"])
 def translate():
     text = request.args.get("text")
     source_language = request.args.get("source_language")
