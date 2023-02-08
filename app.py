@@ -66,7 +66,7 @@ def translate():
 
     translated_text = " ".join(translated_sentences)
     
-    return jsonify({"translated_text": translated_text}, ensure_ascii=False)
+    return jsonify({"translated_text": translated_text})
 
 
 @app.route("/translateTest", methods=["GET"])
@@ -95,4 +95,4 @@ def translateTest():
 
     translated_text = " ".join(translated_sentences)
     
-    return jsonify({"translated_text": translated_text}, ensure_ascii=False)
+    return jsonify({"translated_text": translated_text})
