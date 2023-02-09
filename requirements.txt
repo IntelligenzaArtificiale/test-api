@@ -2,4 +2,3 @@ Flask
 Gunicorn
 jsonify
 requests
-urllib
