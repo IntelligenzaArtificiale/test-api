@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, json
+from flask import Flask, request, jsonify, html
 import requests
 import re
 
@@ -65,7 +65,7 @@ def translate():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    translated_text = json.dumps(translated_text, ensure_ascii=False)
+    translated_text = html.unescape(translated_text)
     return jsonify({"translated_text": translated_text})
 
 
@@ -94,7 +94,7 @@ def translateTest():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    translated_text = json.dumps(translated_text, ensure_ascii=False)
+    translated_text = html.unescape(translated_text)
     return jsonify({"translated_text": translated_text})
 
 #pulisci questa stringa #con python ""Das Leben ist wie eine Zugfahrt Manchmal reisen wir in der ersten Klasse und genie\u00dfen den Komfort und die Sch\u00f6nheit der Landschaft,"
