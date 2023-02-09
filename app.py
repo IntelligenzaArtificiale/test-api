@@ -17,26 +17,6 @@ def info():
     <p>Sostituire "testo"e "lingua_destinazione" con i valori desiderati.</p>
     '''
 
-    # Esempi di richieste di traduzione
-    url1 = 'https://test-api-6lv1.onrender.com/translateTest?text=ciao&tl=en'
-    url2 = 'https://test-api-6lv1.onrender.com/translateTest?text=buongiorno&tl=de'
-    url3 = 'https://test-api-6lv1.onrender.com/translateTest?text=hola&tl=fr'
-    url4 = 'https://test-api-6lv1.onrender.com/translateTest?text=salut&tl=pt'
-    url5 = 'https://test-api-6lv1.onrender.com/translateTest?text=bonjour&tl=en'
-
-    # Ritorna tutti gli esempi in stile HTML
-    html += '<br><h1>Esempi Traduttore API</h1> '
-    html += '<ul>'
-    html += '<li>Traduci "ciao" dall\'italiano all\'inglese: <a href="' + url1 + '">' + url1 + '</a> </li>'
-    html += '<li>Traduci "buongiorno" dall\'italiano al tedesco: <a href="' + url2 + '">' + url2 + '</a> </li>'
-    html += '<li>Traduci "hola" dallo spagnolo al francese: <a href="' + url3 + '">' + url3 + '</a> </li>'
-    html += '<li>Traduci "salut" dal francese al portoghese: <a href="' + url4 + '">' + url4 + '</a> </li>'
-    html += '<li>Traduci "bonjour" dal francese al russo: <a href="' + url5 + '">' + url5 + '</a> </li>'
-    html += '</ul>'
-
-    return html
-
-
 @app.route("/healthz")
 def health_check():
     return "OK", 200
