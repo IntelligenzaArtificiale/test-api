@@ -13,16 +13,16 @@ def info():
     <h1>Traduttore API</h1>
     <p>Questa è una semplice API di traduzione che utilizza Google Translate per tradurre testo da una lingua all'altra.</p>
     <p>Per utilizzare l'API, inviare una richiesta GET alla seguente URL:</p>
-    <pre>/translate?text=testo&source_language=lingua_sorgente&target_language=lingua_destinazione</pre>
-    <p>Sostituire "testo", "lingua_sorgente" e "lingua_destinazione" con i valori desiderati.</p>
+    <pre>/translate?text=testo&arget_language=lingua_destinazione</pre>
+    <p>Sostituire "testo"e "lingua_destinazione" con i valori desiderati.</p>
     '''
 
     # Esempi di richieste di traduzione
-    url1 = 'https://test-api-6lv1.onrender.com/translateTest?text=ciao&sl=it&tl=en'
-    url2 = 'https://test-api-6lv1.onrender.com/translateTest?text=buongiorno&sl=it&tl=de'
-    url3 = 'https://test-api-6lv1.onrender.com/translateTest?text=hola&sl=sl&tl=fr'
-    url4 = 'https://test-api-6lv1.onrender.com/translateTest?text=salut&sl=fr&tl=pt'
-    url5 = 'https://test-api-6lv1.onrender.com/translateTest?text=bonjour&sl=fr&tl=en'
+    url1 = 'https://test-api-6lv1.onrender.com/translateTest?text=ciao&tl=en'
+    url2 = 'https://test-api-6lv1.onrender.com/translateTest?text=buongiorno&tl=de'
+    url3 = 'https://test-api-6lv1.onrender.com/translateTest?text=hola&tl=fr'
+    url4 = 'https://test-api-6lv1.onrender.com/translateTest?text=salut&tl=pt'
+    url5 = 'https://test-api-6lv1.onrender.com/translateTest?text=bonjour&tl=en'
 
     # Ritorna tutti gli esempi in stile HTML
     html += '<br><h1>Esempi Traduttore API</h1> '
@@ -46,6 +46,11 @@ def health_check():
 def translate():
     text = request.json["text"]
     target_language = request.json["tl"]
+
+    #se il testo è più lungo di 2000 caratteri, ritorna un errore
+    if len(text) > 2000:
+        return jsonify({"error": "Text too long"}), 400
+
 
     if not all([text, target_language]):
         return jsonify({"error": "Missing required parameters"}), 400
@@ -75,6 +80,9 @@ def translateTest():
     text = request.args.get("text")
     target_language = request.args.get("tl")
 
+    if len(text) > 2000:
+        return jsonify({"error": "Text too long"}), 400
+
     if not all([text, target_language]):
         return jsonify({"error": "Missing required parameters"}), 400
     
@@ -96,6 +104,4 @@ def translateTest():
 
     translated_text = " ".join(translated_sentences)
     return json.dumps({"translated_text": translated_text}, ensure_ascii=False), 200, {'Content-Type': 'application/json; charset=utf-8'}
-
-#pulisci questa stringa #con python ""Das Leben ist wie eine Zugfahrt Manchmal reisen wir in der ersten Klasse und genie\u00dfen den Komfort und die Sch\u00f6nheit der Landschaft,"
 
