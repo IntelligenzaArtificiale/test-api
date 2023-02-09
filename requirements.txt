@@ -2,3 +2,4 @@ Flask
 Gunicorn
 jsonify
 requests
+codecs
