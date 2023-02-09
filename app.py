@@ -45,10 +45,9 @@ def health_check():
 @app.route("/translate", methods=["POST"])
 def translate():
     text = request.json["text"]
-    source_language = request.json["sl"]
     target_language = request.json["tl"]
 
-    if not all([text, source_language, target_language]):
+    if not all([text, target_language]):
         return jsonify({"error": "Missing required parameters"}), 400
     
     sentences = re.split(r'[.!?]+', text)
@@ -58,7 +57,7 @@ def translate():
         if len(sentence) > 1:  # verifica che la frase non sia vuota
             try:
                 encoded_sentence = urllib.parse.quote(sentence)
-                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={encoded_sentence}"
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={target_language}&dt=t&q={encoded_sentence}"
                 response = requests.get(url)
                 data = response.json()
                 translated_sentences.append(data[0][0][0])
@@ -74,10 +73,9 @@ def translate():
 @app.route("/translateTest", methods=["GET"])
 def translateTest():
     text = request.args.get("text")
-    source_language = request.args.get("sl")
     target_language = request.args.get("tl")
 
-    if not all([text, source_language, target_language]):
+    if not all([text, target_language]):
         return jsonify({"error": "Missing required parameters"}), 400
     
     sentences = re.split(r'[.!?]+', text)
@@ -87,7 +85,7 @@ def translateTest():
         if len(sentence) > 1:  # verifica che la frase non sia vuota
             try:
                 encoded_sentence = urllib.parse.quote(sentence)
-                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={encoded_sentence}"
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={target_language}&dt=t&q={encoded_sentence}"
                 response = requests.get(url)
                 data = response.json()
                 translated_sentences.append(data[0][0][0])
