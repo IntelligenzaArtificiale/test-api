@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, html
+from flask import Flask, request, jsonify
+import html
 import requests
 import re
 
