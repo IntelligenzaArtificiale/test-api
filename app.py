@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-
+import urllib.parse
+import json
 import requests
 import re
 
@@ -56,7 +57,8 @@ def translate():
         sentence = sentence.strip()
         if len(sentence) > 1:  # verifica che la frase non sia vuota
             try:
-                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
+                encoded_sentence = urllib.parse.quote(sentence)
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={encoded_sentence}"
                 response = requests.get(url)
                 data = response.json()
                 translated_sentences.append(data[0][0][0])
@@ -66,7 +68,7 @@ def translate():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    return jsonify({"translated_text": translated_text})
+    return json.dumps({"translated_text": translated_text}, ensure_ascii=False), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 
 @app.route("/translateTest", methods=["GET"])
@@ -84,7 +86,8 @@ def translateTest():
         sentence = sentence.strip()
         if len(sentence) > 1:  # verifica che la frase non sia vuota
             try:
-                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={sentence}"
+                encoded_sentence = urllib.parse.quote(sentence)
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_language}&tl={target_language}&dt=t&q={encoded_sentence}"
                 response = requests.get(url)
                 data = response.json()
                 translated_sentences.append(data[0][0][0])
@@ -94,7 +97,7 @@ def translateTest():
                 return jsonify({"error": f"JSON parsing error: {e}"}), 500
 
     translated_text = " ".join(translated_sentences)
-    return jsonify({"translated_text": translated_text})
+    return json.dumps({"translated_text": translated_text}, ensure_ascii=False), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 #pulisci questa stringa #con python ""Das Leben ist wie eine Zugfahrt Manchmal reisen wir in der ersten Klasse und genie\u00dfen den Komfort und die Sch\u00f6nheit der Landschaft,"
 
